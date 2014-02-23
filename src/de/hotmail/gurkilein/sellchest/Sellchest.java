@@ -13,7 +13,6 @@ import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Sellchest extends JavaPlugin
@@ -39,6 +37,8 @@ public class Sellchest extends JavaPlugin
   public static String errorcreate;
   public static String success;
   public static String ready;
+  public static String signtag;
+  public static boolean fastsell;
   public final SellchestPlayerListener playerListener = new SellchestPlayerListener();
   public final SellchestBlockListener blockListener = new SellchestBlockListener();
   public static Logger log = Logger.getLogger("Minecraft");
@@ -138,6 +138,12 @@ public class Sellchest extends JavaPlugin
       if (!config.contains("general.importfromessentials")) {
         config.set("general.importfromessentials", Boolean.valueOf(false));
       }
+      if (!config.contains("general.signtag")) {
+          config.set("general.signtag", "[Sellchest]");
+        }
+      if (!config.contains("general.fastsell")) {
+          config.set("general.fastsell", Boolean.valueOf(false));
+        }
       if (!config.contains("language.color")) {
         config.set("language.color", Integer.valueOf(11));
       }
@@ -213,6 +219,8 @@ public class Sellchest extends JavaPlugin
     disallow = color + prefix + getConfig().getString("language.disallow");
     errorcreate = color + prefix + getConfig().getString("language.errorcreate");
     success = color + prefix + getConfig().getString("language.success");
+    fastsell = Boolean.getBoolean(getConfig().getString("general.fastsell"));
+    signtag = getConfig().getString("general.signtag");
     pricereload();
   }
 

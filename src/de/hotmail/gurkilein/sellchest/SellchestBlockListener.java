@@ -43,7 +43,7 @@ public class SellchestBlockListener
         {
           Sign sign = (Sign)testblock.getRelative(face).getState();
 
-          if (sign.getLine(0).contains("[SellChest]")) {
+          if (sign.getLine(0).contains(Sellchest.signtag)) {
             if (!Sellchest.perms.has(p, "sellchest.admin")) {
               p.sendMessage(Sellchest.disallow);
               event.setCancelled(true);
